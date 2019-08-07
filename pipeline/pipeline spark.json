@@ -1,0 +1,45 @@
+{
+	"name": "pipeline spark",
+	"properties": {
+		"activities": [
+			{
+				"name": "Spark Count",
+				"type": "HDInsightSpark",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"rootPath": "tortuga",
+					"entryFilePath": "Azure-1.0-SNAPSHOT.jar",
+					"arguments": [
+						"@pipeline().RunId"
+					],
+					"getDebugInfo": "Always",
+					"className": "com.mycompany.azure.Spark",
+					"sparkConfig": {
+						"runid": {
+							"value": "@pipeline().RunId",
+							"type": "Expression"
+						}
+					},
+					"sparkJobLinkedService": {
+						"referenceName": "AzureBlobStorage2",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "hdi",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
